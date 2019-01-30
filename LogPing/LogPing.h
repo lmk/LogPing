@@ -1,18 +1,18 @@
 
-// LogPing.h : PROJECT_NAME ���� ���α׷��� ���� �� ��� �����Դϴ�.
+// LogPing.h :
 //
 
 #pragma once
 
 #ifndef __AFXWIN_H__
-	#error "PCH�� ���� �� ������ �����ϱ� ���� 'stdafx.h'�� �����մϴ�."
+	#error "PCH'stdafx.h'"
 #endif
 
-#include "resource.h"		// �� ��ȣ�Դϴ�.
+#include "resource.h"		
 
 
 // CLogPingApp:
-// �� Ŭ������ ������ ���ؼ��� LogPing.cpp�� �����Ͻʽÿ�.
+//
 //
 
 class CLogPingApp : public CWinApp
@@ -20,11 +20,11 @@ class CLogPingApp : public CWinApp
 public:
 	CLogPingApp();
 
-// �������Դϴ�.
+// 
 public:
 	virtual BOOL InitInstance();
 
-// �����Դϴ�.
+//
 
 	DECLARE_MESSAGE_MAP()
 };

@@ -252,15 +252,20 @@ const char *CLogPingDlg::getIpAddress() const
 /* ping function */
 int CLogPingDlg::ping(const char *ip)
 {
-	unsigned long ipaddr = INADDR_NONE;
+	struct in_addr ipaddr;
+	ZeroMemory(&ipaddr, sizeof(ipaddr));
+
+	//unsigned long ipaddr = INADDR_NONE;
 	DWORD dwRetVal = 0;
 	char  SendData[] = "Data Buffer";
 	char  szReplyBuffer[1500];
 	char  logBuffer[512] ="";
-
 	if ( strcmp(oldIp, ip) != 0 ) {
-		ipaddr = inet_addr(ip);
-		if( ipaddr == INADDR_NONE ) {
+		//ipaddr = inet_addr(ip);
+		auto ret = inet_pton(AF_INET, ip, (void *)&ipaddr.S_un.S_addr);
+
+//		ipaddr = inet_pton(AF_INET, ip, &addr.S_un.S_addr);
+		if(ret == INADDR_NONE ) {
 			return -1;
 		}
 
@@ -274,7 +279,7 @@ int CLogPingDlg::ping(const char *ip)
 		strcpy_s( oldIp, ip);
 	}
 
-	dwRetVal = IcmpSendEcho( hIcmpFile, ipaddr, SendData, sizeof(SendData), NULL, szReplyBuffer, sizeof(szReplyBuffer), 1000 );
+	dwRetVal = IcmpSendEcho( hIcmpFile, (IPAddr)ipaddr.S_un.S_addr, SendData, sizeof(SendData), NULL, szReplyBuffer, sizeof(szReplyBuffer), 1000 );
 	if( dwRetVal != 0 ) {
 		PICMP_ECHO_REPLY pEchoReply = (PICMP_ECHO_REPLY)szReplyBuffer;
 		struct in_addr ReplyAddr;
